@@ -28,15 +28,15 @@ node('') {
         sh ' docker run -d -p 9000:8080  --name dockercontainer mavenbuild '
         }
 	
-	stage ('Deployment'){
-		ansiblePlaybook colorized: true, disableHostKeyChecking: true, playbook: 'deploy.yml'
-	}
-	
 	stage ('Notification'){
 		emailext (
 		      subject: "Job Completed",
 		      body: "Jenkins Pipeline Job for Maven Build got completed !!!",
 		      to: "chandanas.bongale@gmail.com"
 		    )
+	}
+	
+	stage ('Deployment'){
+		ansiblePlaybook colorized: true, disableHostKeyChecking: true, playbook: 'deploy.yml'
 	}
 }
