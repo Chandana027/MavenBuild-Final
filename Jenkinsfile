@@ -1,6 +1,6 @@
 node('') {
 	stage ('checkout code'){
-		checkout scm
+		git credentialsId: '949aec28-f21c-4e1d-9c1a-b78e5f306221', url: 'https://github.com/Chandana027/MavenBuild-Final.git'
 	}
 	
 	stage ('Build'){
