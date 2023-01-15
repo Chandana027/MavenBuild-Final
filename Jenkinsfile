@@ -25,7 +25,7 @@ node('') {
         }
 	
        stage('Create Container '){
-        sh ' docker run -d -p 9000:8080  --name dockercontainer mavenbuild '
+        sh ' docker run -d -p 9000:8080  --name dockercontainer Chandana mavenbuild '
         }
 	
 	stage ('Deployment'){
