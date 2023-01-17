@@ -40,7 +40,7 @@ node{
             		echo "Image push complete"
         }
                 }
-        node('KubernetesVM'){
+        node('KubernetesMaster'){
         	stage('Run App'){
             		sh """
          	 kubectl create deployment kubernetes-bootcamp --image=docker.io/chandanas45/$containerName:$tag --port=8090
