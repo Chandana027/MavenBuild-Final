@@ -1,7 +1,7 @@
 def containerName="mavenbuild"
 def tag="latest"
 def dockerHubUser="chandanas45"
-def httpPort="8090"node('') 
+def httpPort="8090" 
 node{
 	stage ('checkout code'){
 		git credentialsId: '949aec28-f21c-4e1d-9c1a-b78e5f306221', url: 'https://github.com/Chandana027/MavenBuild-Final.git'
@@ -43,7 +43,7 @@ node{
         node('KubernetesVM'){
         	stage('Run App'){
             		sh """
-         	 kubectl create deployment kubernetes-bootcamp --image=docker.io/updhanu/$containerName:$tag --port=8090
+         	 kubectl create deployment kubernetes-bootcamp --image=docker.io/chandanas45/$containerName:$tag --port=8090
                		kubectl get pods
             	    """
                 }
