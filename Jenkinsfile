@@ -30,23 +30,24 @@ node{
 	stage('Image Build'){
         sh "docker build -t $containerName:$tag  -t $containerName --pull --no-cache ."
         echo "Image build complete"
-    }
-    stage('Push to Docker Registry'){
-        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
-            sh "docker login -u $dockerUser -p $dockerPassword"
-            sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-            sh "docker push $dockerUser/$containerName:$tag"
-            echo "Image push complete"
-    }
         }
-    node('KubernetesVM'){
-        stage('Run App'){
-            sh """
-         kubectl create deployment kubernetes-bootcamp --image=docker.io/updhanu/$containerName:$tag --port=8090
-               kubectl get pods
-            """
+	
+        stage('Push to Docker Registry'){
+        	withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+            		sh "docker login -u $dockerUser -p $dockerPassword"
+            		sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
+            		sh "docker push $dockerUser/$containerName:$tag"
+            		echo "Image push complete"
         }
-    }
+                }
+        node('KubernetesVM'){
+        	stage('Run App'){
+            		sh """
+         	 kubectl create deployment kubernetes-bootcamp --image=docker.io/updhanu/$containerName:$tag --port=8090
+               		kubectl get pods
+            	    """
+                }
+        }
 	
 	stage ('Notification'){
 		emailext (
